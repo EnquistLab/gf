@@ -1,0 +1,231 @@
+gf_verbatim,gf,is_woody,substrate,other,is_useless
+0,,,,,1
+1,,,,,1
+10,,,,,1
+2,,,,,1
+3,,,,,1
+4,,,,,1
+5,,,,,1
+6,,,,,1
+acaulescent rosette,herb,0,terrestrial,,0
+acrocarpic moss,herb,0,terrestrial,,0
+acrocarpous,herb,0,terrestrial,,0
+acrocarpous moss,herb,0,terrestrial,,0
+aloe,herb,0,terrestrial,,0
+aquatic,herb,0,aquatic,,0
+aquatic herb,herb,0,aquatic,,0
+aquatic sedge,herb,0,aquatic,,0
+arborescent_fern,tree,1,terrestrial,treefern,0
+bamboo,bambusoid,1,terrestrial,,0
+branch angle climber,,,,,1
+brophyte,herb,0,terrestrial,,0
+bunchgrass,herb,0,terrestrial,,0
+bush,shrub,1,terrestrial,,0
+cactus,,0,terrestrial,succulent,0
+canopy liana,liana,1,climber,,0
+climber,,,,,1
+climbing epihyte,herb,0,epiphyte,,0
+climbing_epiphyte,herb,,epiphyte,,0
+climbing grass,herb,0,epiphyte,,0
+climbing herb,herb,0,epiphyte,,0
+climbing legume,,,climber,,1
+climbing_plant_,,,climber,,1
+climbing shrub,hemiepiphyte,1,epiphyte,,0
+climbing_vine,vine,0,epiphyte,,0
+climibing_herb,vine,0,epiphyte,,0
+club moss,herb,0,terrestrial,,0
+columnar succulent,tree,1,terrestrial,columnar succulent,0
+corollocarpus epigaeus,,,,,1
+creeper,,,,,1
+creeping herb,herb,0,terrestrial,,0
+crucifer,,,,,1
+cushion grass,herb,0,terrestrial,,0
+cushion plant,herb,0,terrestrial,,0
+cyperoid,herb,0,terrestrial,,0
+dwarf palm,herb,0,terrestrial,,0
+dwarf shrub,subshrub,1,terrestrial,,0
+dwarf succulent,,0,terrestrial,dwarf succulent,0
+epiphyte,,,epiphyte,,0
+epiphytic,,,epiphyte,,0
+epiphytic_climber,,,epiphyte,,0
+epiphytic_clumps,,,epiphyte,,0
+epiphytic_herb,herb,0,epiphyte,,0
+epiphytic_plant_,,,epiphyte,,0
+epiphytic_shrub,shrub,1,epiphyte,,0
+epiphytic_vine,vine,0,epiphyte,,0
+evergreen climber,,,,,1
+evergreen phreatophyte,,,,phreatophyte,1
+fern,,,,,1
+fern ally,,,,,1
+forb,herb,0,terrestrial,,0
+geophyte,,0,terrestrial,geophyte,0
+giant tree,tree,1,terrestrial,,0
+graminoid,herb,0,terrestrial,,0
+gras,herb,0,terrestrial,,0
+grass,herb,0,terrestrial,,0
+halophyte,herb,0,terrestrial,halophyte,0
+hanging_epiphyte,herb,0,epiphyte,,0
+hanging_vine,vine,0,climber,,0
+hemicr,herb,0,terrestrial,hemicryptophyte,0
+hemicryptophyte,herb,0,terrestrial,hemicryptophyte,0
+hemi-epiphyte,hemiepiphyte,,,,0
+hemiepiphyte,hemiepiphyte,,,,0
+hemi-epiphytic strangler,hemiepiphyte,1,climber,,0
+hemi-parasite,,,terrestrial,hemiparasite,0
+hemiparasite,,,terrestrial,hemiparasite,0
+hepatic,herb,0,terrestrial,,0
+herb,herb,0,terrestrial,,0
+herbaceous climber,vine,0,climber,,0
+herbaceous geophyte,herb,0,terrestrial,geophyte,0
+herbaceous hemi-cryptophyte,herb,0,terrestrial,hemicryptophyte,0
+herbaceous phanerophyte,herb,0,terrestrial,phanerophyte,0
+herbaceous subshrub,herb,0,terrestrial,subshrub,0
+herbaceous twiner,vine,0,climber,,0
+herbaceous vine,vine,0,climber,,0
+herbaeous climber,vine,0,climber,,0
+"herb, cree",herb,0,terrestrial,,0
+herb_erect,herb,0,terrestrial,,0
+"herb, pere",herb,0,terrestrial,,0
+herb phs,,,,,1
+"herb, wood",,,,,1
+herg,,,,,1
+hierba_,herb,0,terrestrial,,0
+hook climber,liana,1,climber,hook climber,0
+hydrophyte,herb,0,aquatic,hydrophyte,0
+large tree,,,,,0
+large vine,,,,,0
+leaf succulent,herb,0,,succulent,0
+leaf-succulent,herb,0,,succulent,0
+leaning climber,tree,1,climber,scandent,0
+liana,liana,1,climber,,0
+lithophyte,herb,0,terrestrial,lithophyte,0
+liverwort,herb,0,terrestrial,,0
+lycopod,herb,0,terrestrial,,0
+lycopsid,,,,,1
+mallee,,,,,1
+marsh,,,,,1
+medium sized tree,tree,1,terrestrial,,0
+medium-sized_tree,tree,1,terrestrial,,0
+medium size tree,tree,1,terrestrial,,0
+mistletoe,herb,0,epiphyte,parasite,0
+moss,herb,0,terrestrial,,0
+mushroom,,,,,1
+neophyte,,,,,1
+non-woody climber,vine,0,climber,,0
+non-woody epiphyte,herb,0,epiphyte,,0
+orchid,herb,0,,,0
+palm,tree,1,terrestrial,palm,0
+palm-like shrub,shrub,1,terrestrial,palm,0
+palmoid,shrub,1,terrestrial,palm,0
+pam,,,,,1
+parasite,,,,parasite,0
+pendent epiphyte,herb,0,epiphyte,,0
+per grass,herb,0,terrestrial,,0
+phaerophyte,,,,,1
+pleurocarpic moss,herb,0,terrestrial,,0
+pleurocarpous moss,herb,0,terrestrial,,0
+pleurocarpus,,,,,1
+pygmy,,,,,1
+reed,bambusoid,0,terrestrial,,0
+rosette,herb,0,terrestrial,,0
+ruderal,,,,,1
+saprophyte,herb,0,terrestrial,saprophyte,0
+saxicole,herb,0,terrestrial,saxicole,0
+scandent,tree,1,climber,scandent,0
+scandent_epiphyte,herb,0,epiphyte,scandent,0
+scandent_herb,herb,0,terrestrial,,0
+scandent_vine,vine,0,climber,,0
+sclerophyll,,,,,1
+scrambler,,,,,1
+scrambler with branch tendrils,,,,,1
+scrambling herb,herb,0,terrestrial,,0
+sedge,herb,0,terrestrial,,0
+semi-epiphytic,herb,0,epiphyte,,0
+semi-shrub,shrub,1,terrestrial,,0
+semi-succulent shrub,shrub,1,terrestrial,semi-succulent,0
+sg,,,,,1
+shrub,shrub,1,terrestrial,,0
+shrub_,shrub,1,terrestrial,,0
+shrubby bamboo,bambusoid,1,terrestrial,,0
+shrubby climber,hemiepiphyte,1,climber,,0
+shrublet,shrub,1,terrestrial,,0
+shrub-like_clumps,,,,,1
+shrub-like_herb,herb,0,terrestrial,,0
+shrub_(occasionally),shrub,1,terrestrial,,0
+shrub_(rare),shrub,1,terrestrial,,0
+shrub/tree,tree,1,terrestrial,,0
+shrug,shrub,1,terrestrial,,0
+shub,shrub,1,terrestrial,,0
+shurb,shrub,1,terrestrial,,0
+small_herb_,herb,0,terrestrial,,0
+small_shrub,shrub,1,terrestrial,,0
+small tree,tree,1,terrestrial,,0
+small_tree,tree,1,terrestrial,,0
+stem rosette,herb,0,terrestrial,,0
+stem succulent,,,,succulent,0
+stem-succulent,,,,succulent,0
+sub shrub,shrub,1,terrestrial,subshrub,0
+sub-shrub,shrub,1,terrestrial,subshrub,0
+subshrub,shrub,1,terrestrial,subshrub,0
+succule\nt,herb,0,terrestrial,succulent,0
+succulent,herb,0,terrestrial,succulent,0
+succulent basal rosette,herb,0,terrestrial,succulent,0
+succulent herb,herb,0,terrestrial,succulent,0
+succulent shrub,shrub,1,terrestrial,succulent,0
+succulent shrubs,tree,1,terrestrial,succulent,0
+succulent stem rosette,herb,0,terrestrial,succulent,0
+succulent tree,tree,1,terrestrial,succulent,0
+suffrutescent,shrub,1,terrestrial,subshrub,0
+suffrutex,shrub,1,terrestrial,subshrub,0
+tendril climber,,,climber,,0
+terrestrial,,,terrestrial,,0
+terrestrial_,,,terrestrial,,0
+terrestrial bryoid,herb,0,terrestrial,,0
+terrestrial_clumps,,,terrestrial,,0
+terrestrial_epiphyte,,,,,1
+terrestrial_fern,herb,0,terrestrial,,0
+terrestrial_herb,herb,0,terrestrial,,0
+terrestrial_shrub,shrub,1,terrestrial,,0
+terrestrial_trailing_plant,herb,0,terrestrial,trailing,0
+therophyte,herb,0,terrestrial,annual,0
+trailer,vine,0,climber,,0
+trailing_herb,vine,0,climber,trailing,0
+trailing_herb_,vine,0,climber,trailing,0
+trailing_herbaceous_vine,vine,0,climber,trailing,0
+trailing_plant,vine,0,climber,trailing,0
+trailing_vine,vine,0,climber,trailing,0
+tree,tree,1,terrestrial,,0
+tree_,tree,1,terrestrial,,0
+tree-climbing__plant,,,climber,,0
+tree fern,tree,1,terrestrial,treefern,0
+tree_fern,tree,1,terrestrial,treefern,0
+treelet,tree,1,terrestrial,,0
+tree like,tree,1,terrestrial,,0
+tree-like,tree,1,terrestrial,,0
+treelike rosette,tree,1,terrestrial,treelike rosette,0
+"tree (means find other one in original, add )",tree,1,terrestrial,,0
+treen,,,,,1
+tree/shrub,tree,1,terrestrial,,0
+trunk,,,,,1
+tussock,herb,0,terrestrial,,0
+tussock grass,herb,0,terrestrial,,0
+twiner,vine,0,climber,,0
+twining herb,vine,0,climber,,0
+twining shrub,shrub,1,climber,twining shrub,0
+understorey,,,,,1
+understorey shrub,shrub,1,terrestrial,,0
+vascular cryptogam,herb,0,terrestrial,,0
+vascular cryptogram,herb,0,terrestrial,,0
+vine,vine,0,climber,,0
+viny shrub,shrub,1,climber,viny shrub,0
+wildflower,,,,,1
+wody climber,liana,1,climber,,0
+wood_shrub,shrub,1,terrestrial,,0
+woody,,1,,,0
+woody climber,liana,1,climber,,0
+woody creeper,liana,1,climber,woody creeper,0
+woody epiphyte,shrub,1,epiphyte,,0
+woody herb,,,,,1
+woody_herb,,,,,1
+woody phanerophyte,,1,,phanerophyte,0
+woody vine,liana,1,climber,,0

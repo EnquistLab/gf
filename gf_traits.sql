@@ -1,14 +1,10 @@
 -- ---------------------------------------------------------------------------
--- BIEN Growth Forms
+-- Extract raw growth forms from BIEN traits tables
 --
--- Purpose: add growth forms to list of species with range models
--- 
 -- Steps:
 -- * Query BIEN trait table for species GFs
--- * Mine analytical table for species GFs
--- * Merge above lists by species & extract consensus GF
--- * Join GFs to BIEN range model species list
--- * Impute GFs for remaining species if possible
+-- * Resolve taxonomic issues, if any
+-- * Separate raw species, genus and family traits attributions
 --
 -- Date: 7 Jul 2022
 -- ---------------------------------------------------------------------------
@@ -331,21 +327,150 @@ HAVING COUNT(DISTINCT scrubbed_family)>1
 
 
 --
--- Extract traits by taxon
+-- Final prep of raw data
 --
 
--- Extract species traits
+-- Set growth form name to all lower case
+UPDATE gf_traits_raw
+SET trait_value=lower(trait_value)
+;
+
+-- Remove asterisks (common, for some reason)
+UPDATE gf_traits_raw
+SET trait_value=REPLACE(trait_value, '*', '')
+;
+
+-- Trim whitespace, set empty strings to null and remove null value rows
+UPDATE gf_traits_raw
+SET trait_value=TRIM(trait_value)
+;
+UPDATE gf_traits_raw
+SET trait_value=NULL
+WHERE trait_value=''
+;
+DELETE FROM gf_traits_raw
+WHERE trait_value IS NULL
+;
+
+-- backup main traits table again
+DROP TABLE IF EXISTS gf_traits_raw_bak3;
+CREATE TABLE gf_traits_raw_bak3 (like gf_traits_raw including all);
+INSERT INTO  gf_traits_raw_bak3 SELECT * FROM gf_traits_raw;
+
+
+--
+-- Extract table of unique trait values for manual correction & lookup table
+--
+
+DROP TABLE IF EXISTS gf_verbatim_traits;
+CREATE TABLE gf_verbatim_traits AS
+SELECT DISTINCT trait_value AS gf_verbatim,
+NULL::text AS gf,             -- standard gf code
+NULL::smallint AS is_woody,   -- 0|1|NULL, default NULL
+NULL::text AS substrate,      -- terrestrial|climber|epiphyte|aquatic
+NULL::text AS other,          -- other attributes, semi-standardized
+0::smallint AS is_useless     -- 0|1, default 0 (no), not interpretable
+FROM gf_traits_raw
+ORDER BY trait_value
+;
+
+\copy gf_verbatim_traits to '/tmp/gf_verbatim_traits.csv' WITH HEADER CSV
+
+/* 
+IMPORTANT!!!
+You MUST edit gf_verbatim_traits.txt manually before next step
+When done, rename the file to gf_verbatim_traits_final.txt and place in /tmp folder
+*/
+
+ 
+--
+-- Import lookup table & update new table of scrubbed traits
+--
+
+-- Create new empty table
+ALTER TABLE gf_verbatim_traits RENAME TO gf_verbatim_traits_bak;
+DROP TABLE IF EXISTS gf_verbatim_traits;
+CREATE TABLE gf_verbatim_traits (LIKE gf_verbatim_traits_bak INCLUDING ALL);
+
+-- Import the edited traits
+\copy gf_verbatim_traits FROM '/tmp/gf_verbatim_traits_final.csv' WITH HEADER CSV
+
+DROP INDEX IF EXISTS gf_verbatim_traits_gf_verbatim_idx;
+CREATE INDEX gf_verbatim_traits_gf_verbatim_idx ON gf_verbatim_traits(gf_verbatim);
+
+--
+-- Update the raw traits table with standardized growth form attributes
+--
+
+DROP TABLE IF EXISTS gf_traits;
+CREATE TABLE gf_traits AS
+SELECT id, 
+scrubbed_family as family, scrubbed_genus as genus, scrubbed_species_binomial as species, scrubbed_family_orig as family_orig, scrubbed_genus_orig as genus_orig, 
+scrubbed_species_binomial_orig as species_orig, name_updated, 
+trait_value as gf_verbatim
+FROM gf_traits_raw
+;
+
+ALTER TABLE gf_traits
+ADD COLUMN gf_std text DEFAULT NULL,
+ADD COLUMN is_woody smallint DEFAULT NULL,
+ADD COLUMN substrate text DEFAULT NULL, 
+ADD COLUMN other text DEFAULT NULL,
+ADD COLUMN is_useless smallint DEFAULT 0
+;
+
+DROP INDEX IF EXISTS gf_traits_gf_verbatim_idx;
+CREATE INDEX gf_traits_gf_verbatim_idx ON gf_traits(gf_verbatim);
+
+UPDATE gf_traits a
+SET gf_std=b.gf,
+is_woody=b.is_woody,
+substrate=b.substrate, 
+other=b.other,
+is_useless=b.is_useless
+FROM gf_verbatim_traits b
+WHERE a.gf_verbatim=b.gf_verbatim
+;
+
+UPDATE gf_traits SET gf_std=NULL WHERE TRIM(gf_std)='';
+UPDATE gf_traits SET substrate=NULL WHERE TRIM(substrate)='';
+UPDATE gf_traits SET other=NULL WHERE TRIM(other)='';
+
+DROP INDEX IF EXISTS gf_traits_is_useless_idx;
+CREATE INDEX gf_traits_is_useless_idx ON gf_traits(is_useless);
+DELETE FROM gf_traits WHERE is_useless=1;
+
+DROP INDEX IF EXISTS gf_traits_gf_std_idx;
+DROP INDEX IF EXISTS gf_traits_family_idx;
+DROP INDEX IF EXISTS gf_traits_genus_idx;
+DROP INDEX IF EXISTS gf_traits_species_idx;
+DROP INDEX IF EXISTS gf_traits_family_orig_idx;
+DROP INDEX IF EXISTS gf_traits_genus_orig_idx;
+DROP INDEX IF EXISTS gf_traits_species_orig_idx;
+DROP INDEX IF EXISTS gf_traits_name_updated_idx;
+
+CREATE INDEX gf_traits_gf_std_idx ON gf_traits(gf_std);
+CREATE INDEX gf_traits_family_idx ON gf_traits(family);
+CREATE INDEX gf_traits_genus_idx ON gf_traits(genus);
+CREATE INDEX gf_traits_species_idx ON gf_traits(species);
+CREATE INDEX gf_traits_family_orig_idx ON gf_traits(family_orig);
+CREATE INDEX gf_traits_genus_orig_idx ON gf_traits(genus_orig);
+CREATE INDEX gf_traits_species_orig_idx ON gf_traits(species_orig);
+CREATE INDEX gf_traits_name_updated_idx ON gf_traits(name_updated);
+
+--
+-- Extract unique gf attributions with observation counts, by taxon
+--
+
+-- Species gf
 DROP TABLE IF EXISTS gf_traits_species;
 CREATE TABLE gf_traits_species AS
-SELECT DISTINCT scrubbed_family as family, scrubbed_genus as genus, 
-scrubbed_species_binomial as species,
-trait_value as gf, COUNT(*) AS trait_obs
-FROM gf_traits_raw
-WHERE scrubbed_species_binomial IS NOT NULL
-GROUP BY scrubbed_family, scrubbed_genus, scrubbed_species_binomial,
-trait_value
-ORDER BY scrubbed_family, scrubbed_genus, scrubbed_species_binomial,
-trait_value
+SELECT DISTINCT family, genus, species, gf_std as gf, COUNT(*) AS obs
+FROM gf_traits
+WHERE species IS NOT NULL
+AND gf_std IS NOT NULL
+GROUP BY family, genus, species, gf
+ORDER BY family, genus, species, gf
 ;
 
 -- Check for homonyms species in >1 family; shouldn't be any at this stage
@@ -360,15 +485,15 @@ HAVING COUNT(DISTINCT family)>1
 ) AS has_homonym_species_gf_traits_species
 ; 
 
--- Extract genus traits
+-- Genus gf
 DROP TABLE IF EXISTS gf_traits_genus;
 CREATE TABLE gf_traits_genus AS
-SELECT scrubbed_family as family, scrubbed_genus as genus, 
-trait_value as gf, COUNT(*) AS trait_obs
-FROM gf_traits_raw
-WHERE scrubbed_genus IS NOT NULL AND scrubbed_species_binomial IS NULL
-GROUP BY scrubbed_family, scrubbed_genus, trait_value
-ORDER BY scrubbed_family, scrubbed_genus, trait_value
+SELECT DISTINCT family, genus, gf_std as gf, COUNT(*) AS obs
+FROM gf_traits
+WHERE genus IS NOT NULL AND species IS NULL
+AND gf_std IS NOT NULL
+GROUP BY family, genus, gf
+ORDER BY family, genus, gf
 ;
 
 -- Check for homonyms genera in >1 family; shouldn't be any at this stage
@@ -383,16 +508,15 @@ HAVING COUNT(DISTINCT family)>1
 ) AS has_homonym_genera_gf_traits_genus
 ; 
 
--- Extract family traits
+--Family gf
 DROP TABLE IF EXISTS gf_traits_family;
 CREATE TABLE gf_traits_family AS
-SELECT scrubbed_family as family,
-trait_value as gf, COUNT(*) AS trait_obs
-FROM gf_traits_raw
-WHERE scrubbed_family IS NOT NULL 
-AND scrubbed_genus IS NULL AND scrubbed_species_binomial IS NULL
-GROUP BY scrubbed_family, trait_value
-ORDER BY scrubbed_family, trait_value
+SELECT family, gf_std as gf, COUNT(*) AS obs
+FROM gf_traits
+WHERE family IS NOT NULL AND genus IS NULL AND species IS NULL
+AND gf_std IS NOT NULL
+GROUP BY family, gf
+ORDER BY family, gf
 ;
 
 
