@@ -1,5 +1,5 @@
 -- ---------------------------------------------------------------------------
--- Extract raw growth forms from BIEN  analuytical observation table
+-- Extract raw growth forms from BIEN taxon observations table
 --
 -- Steps:
 -- * Query BIEN table view_full_occurrent_individual for species GFs
@@ -9,9 +9,8 @@
 -- Date: 7 Jul 2022
 -- ---------------------------------------------------------------------------
 
-\set sch_obs analytical_db
-\set  sch_gf growthforms
-\set  sch_rangespp boyle
+\set  sch_gf growthforms	-- Schema in which growth form tables will be built
+\set sch_obs analytical_db	-- Source schema of growth form attributions/observations
 
 \c vegbien
 CREATE SCHEMA IF NOT EXISTS :sch_gf;

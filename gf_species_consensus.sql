@@ -1,5 +1,6 @@
 -- ---------------------------------------------------------------------------
--- Infer consensus growth form from compiled BIEN growth form attributions
+-- Infer consensus growth form for speciesfrom compiled BIEN growth form 
+-- attributions
 --
 -- Steps:
 -- * Append standardized gf obs from trait table and vfoi
@@ -20,11 +21,14 @@
 
 \set sch_obs analytical_db
 \set  sch_gf growthforms
-\set  sch_rangespp boyle
 
 \c vegbien
-CREATE SCHEMA IF NOT EXISTS :sch_gf;
 SET search_path TO :sch_gf;
+
+-- Clean up some taxonomic anomalies before starting
+-- Need better solution earlier on
+DELETE FROM gf_traits_species WHERE family IS NULL;
+DELETE FROM gf_vfoi_species WHERE family IS NULL;
 
 --
 -- Compile table of standardized gf attributions
@@ -97,6 +101,9 @@ INSERT INTO gf_species_obs_bak SELECT * FROM gf_species_obs;
 DROP TABLE gf_species_obs;
 ALTER TABLE gf_species_obs_uniq RENAME TO gf_species_obs;
 
+--
+-- Infer consensus gf
+--
 
 -- Add size sort order for growth forms
 ALTER TABLE gf_species_obs
@@ -117,12 +124,7 @@ END
 WHERE gf IS NOT NULL
 ;
 
-
-
---
--- Infer consensus gf
---
-
+-- Create table
 DROP TABLE IF EXISTS gf_species;
 CREATE TABLE gf_species (
 family text,
@@ -175,9 +177,31 @@ SET gf_all=b.gf_all
 FROM (
 SELECT species, 
 	string_agg(gf, ',') AS gf_all
+FROM (
+SELECT species, gf
 FROM gf_species_obs
+ORDER BY species, gf
+) x
 GROUP BY species
 ) b
 WHERE a.species=b.species
 ;
+
+-- Reset default sort orders
+DROP TABLE IF EXISTS gf_species_obs_temp;
+CREATE TABLE gf_species_obs_temp AS
+SELECT * FROM gf_species_obs
+ORDER BY family, genus, species, gf
+; 
+DROP TABLE gf_species_obs;
+ALTER TABLE gf_species_obs_temp RENAME TO gf_species_obs;
+
+DROP TABLE IF EXISTS gf_species_temp;
+CREATE TABLE gf_species_temp AS
+SELECT * FROM gf_species
+ORDER BY family, genus, species, gf_cons
+; 
+DROP TABLE gf_species;
+ALTER TABLE gf_species_temp RENAME TO gf_species;
+
 
