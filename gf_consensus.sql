@@ -61,9 +61,41 @@ FROM gf_traits_species
 ;
 
 -- Insert observation attributions
+-- Insert trait attributions
+INSERT INTO gf_species_obs (
+family,
+genus,
+species,
+gf,
+obs,
+obs_source
+)
+SELECT 
+family,
+genus,
+species,
+gf,
+obs,
+'BIEN vfoi'
+FROM gf_vfoi_species
+;
 
-/* UNDER CONSTRUCTION */
+-- make unique
+DROP TABLE IF EXISTS gf_species_obs_uniq;
+CREATE TABLE gf_species_obs_uniq AS
+SELECT family, genus, species, gf, 
+	SUM(obs) as obs, 
+    string_agg(obs_source, ',') AS obs_sources
+FROM gf_species_obs
+GROUP BY family, genus, species, gf
+;
 
+-- Back up and replace original table with unique values table
+DROP TABLE IF EXISTS gf_species_obs_bak;
+CREATE TABLE gf_species_obs_bak (LIKE gf_species_obs INCLUDING ALL);
+INSERT INTO gf_species_obs_bak SELECT * FROM gf_species_obs;
+DROP TABLE gf_species_obs;
+ALTER TABLE gf_species_obs_uniq RENAME TO gf_species_obs;
 
 
 -- Add size sort order for growth forms
@@ -142,9 +174,10 @@ UPDATE gf_species a
 SET gf_all=b.gf_all
 FROM (
 SELECT species, 
-       string_agg(gf, ',') AS gf_all
+	string_agg(gf, ',') AS gf_all
 FROM gf_species_obs
 GROUP BY species
 ) b
 WHERE a.species=b.species
 ;
+

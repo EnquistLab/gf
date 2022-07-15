@@ -69,12 +69,12 @@ SET applies_to_rank='species'
 WHERE scrubbed_species_binomial IS NOT NULL
 ;
 UPDATE gf_traits_raw
-SET applies_to_rank='species'
+SET applies_to_rank='genus'
 WHERE scrubbed_genus IS NOT NULL 
 AND scrubbed_species_binomial IS NULL
 ;
 UPDATE gf_traits_raw
-SET applies_to_rank='species'
+SET applies_to_rank='family'
 WHERE scrubbed_family IS NOT NULL 
 AND scrubbed_genus IS NULL
 AND scrubbed_species_binomial IS NULL
@@ -188,6 +188,7 @@ OR (scrubbed_genus='Tripteris' AND scrubbed_family IS NULL)
 OR (scrubbed_genus='Washingtonia' AND scrubbed_family='Apiaceae')
 ;
 
+-- Mark species to check in detail
 UPDATE gf_traits_raw_homonym_genera
 SET check_species=1 
 WHERE (scrubbed_genus='Fabricia' AND scrubbed_family='Lamiaceae') -- Total mess, check species
@@ -198,6 +199,7 @@ OR (scrubbed_genus='Podocarpus' AND scrubbed_family='Unknown') -- Check species
 OR (scrubbed_genus='Rhipogonum' AND scrubbed_family='Liliaceae') -- Update all to Rhipogonaceae
 ;
 
+-- Make table of species with homonym genera
 DROP TABLE IF EXISTS gf_traits_raw_homonym_genera_temp;
 CREATE TABLE gf_traits_raw_homonym_genera_temp AS
 SELECT DISTINCT a.scrubbed_genus, a.scrubbed_family, b.scrubbed_species_binomial
@@ -327,7 +329,7 @@ HAVING COUNT(DISTINCT scrubbed_family)>1
 
 
 --
--- Final prep of raw data
+-- Prep final raw data
 --
 
 -- Set growth form name to all lower case
@@ -352,11 +354,10 @@ DELETE FROM gf_traits_raw
 WHERE trait_value IS NULL
 ;
 
--- backup main traits table again
-DROP TABLE IF EXISTS gf_traits_raw_bak3;
-CREATE TABLE gf_traits_raw_bak3 (like gf_traits_raw including all);
-INSERT INTO  gf_traits_raw_bak3 SELECT * FROM gf_traits_raw;
-
+-- Final backup of raw gf_traits table 
+DROP TABLE IF EXISTS gf_traits_raw_bak_final;
+CREATE TABLE gf_traits_raw_bak_final (like gf_traits_raw including all);
+INSERT INTO  gf_traits_raw_bak_final SELECT * FROM gf_traits_raw;
 
 --
 -- Extract table of unique trait values for manual correction & lookup table

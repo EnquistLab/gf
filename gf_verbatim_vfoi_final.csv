@@ -1,0 +1,30 @@
+gf_verbatim,gf,is_woody,substrate,other,is_useless
+aquatic,herb,0,aquatic,,0
+arborescent fern,tree,0,terrestrial,treefern,0
+cespitose palm,tree,1,terrestrial,,0
+climber,,,climber,,0
+epiphyte,,,epiphyte,,0
+forb,herb,0,terrestrial,,0
+grass,herb,0,terrestrial,,0
+hemiepiphyte,hemiepiphyte,,hemiepiphyte,,0
+hemiepiphytic tree,hemiepiphyte,1,hemiepiphyte,,0
+hemiepiphytic treelet,hemiepiphyte,1,hemiepiphyte,,0
+herb,herb,0,terrestrial,,0
+liana,liana,1,climber,,0
+lianescent tree,tree,1,terrestrial,scandent,0
+lianescent treelet,tree,1,terrestrial,scandent,0
+lianescent tree or shrub,tree,1,terrestrial,scandent,0
+myco-heterotroph,herb,0,terrestrial,mycoheterotroph,0
+palmoid tree or shrub,tree,1,terrestrial,,0
+parasitic,,,,parasitic,0
+shrub,shrub,1,terrestrial,,0
+shrublet,shrub,1,terrestrial,subshrub,0
+shrub or treelet,shrub,1,terrestrial,,0
+solitary palm,tree,1,terrestrial,,0
+succulent tree,tree,1,terrestrial,succulent,0
+succulent treeleet,tree,1,terrestrial,succulent,0
+succulent treelet,tree,1,terrestrial,succulent,0
+tree,tree,1,terrestrial,,0
+tree or shrub,tree,1,terrestrial,,0
+vine,vine,0,climber,,0
+woody bamboo,bambusoid,1,terrestrial,,0
