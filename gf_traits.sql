@@ -6,6 +6,11 @@
 -- * Resolve taxonomic issues, if any
 -- * Separate raw species, genus and family traits attributions
 --
+-- Notes:
+-- 	1.	All file input/output is done to and from /tmp. You may move these files
+-- 		wherever when editing, as long as the final version is placed in /tmp
+--		for import to Postgres
+-- 
 -- Date: 7 Jul 2022
 -- ---------------------------------------------------------------------------
 
