@@ -39,8 +39,10 @@ spp_gf_prop=0 (i.e., gf_cons based on family and/or genus attributions only)
 -- Schema parameters
 -- -----------------------------------------------------------
 
-\set sch_gf growthforms	-- Schema in which growth form tables will be built
-\set sch_obs analytical_db	-- Source schema of growth form attributions/observations
+-- Schema in which growth form tables will be built
+\set sch_gf growthforms
+-- Source schema of growth form attributions/observations
+\set sch_obs analytical_db
 
 -- -----------------------------------------------------------
 -- Main
@@ -301,3 +303,34 @@ OFFSET 0
 ;
 
 */
+
+--
+-- Index the final tables
+--
+
+-- gf_species
+DROP INDEX IF EXISTS gf_species_family_idx;
+DROP INDEX IF EXISTS gf_species_genus_idx;
+DROP INDEX IF EXISTS gf_species_species_idx;
+DROP INDEX IF EXISTS gf_species_gf_conf_flag_idx;
+
+CREATE INDEX gf_species_family_idx ON gf_species (family);
+CREATE INDEX gf_species_genus_idx ON gf_species (genus);
+CREATE INDEX gf_species_species_idx ON gf_species (species);
+CREATE INDEX gf_species_gf_conf_flag_idx ON gf_species (gf_conf_flag);
+
+-- gf_genus
+DROP INDEX IF EXISTS gf_genus_family_idx;
+DROP INDEX IF EXISTS gf_genus_genus_idx;
+DROP INDEX IF EXISTS gf_genus_gf_conf_flag_idx;
+
+CREATE INDEX gf_genus_family_idx ON gf_genus (family);
+CREATE INDEX gf_genus_genus_idx ON gf_genus (genus);
+CREATE INDEX gf_genus_gf_conf_flag_idx ON gf_genus (gf_conf_flag);
+
+-- gf_family
+DROP INDEX IF EXISTS gf_family_family_idx;
+DROP INDEX IF EXISTS gf_family_gf_conf_flag_idx;
+
+CREATE INDEX gf_family_family_idx ON gf_family (family);
+CREATE INDEX gf_family_gf_conf_flag_idx ON gf_family (gf_conf_flag);

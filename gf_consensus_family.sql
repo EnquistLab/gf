@@ -15,9 +15,10 @@
 -- Date: 13 Jul 2022
 -- ---------------------------------------------------------------------------
 
-
-\set  sch_gf growthforms	-- Schema in which growth form tables will be built
-\set sch_obs analytical_db	-- Source schema of growth form attributions/observations
+-- Schema in which growth form tables will be built
+\set sch_gf growthforms
+-- Source schema of growth form attributions/observations
+\set sch_obs analytical_db
 
 \c vegbien
 SET search_path TO :sch_gf;

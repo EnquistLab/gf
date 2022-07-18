@@ -19,8 +19,10 @@
 -- Date: 13 Jul 2022
 -- ---------------------------------------------------------------------------
 
+-- Schema in which growth form tables will be built
+\set sch_gf growthforms
+-- Source schema of growth form attributions/observations
 \set sch_obs analytical_db
-\set  sch_gf growthforms
 
 \c vegbien
 SET search_path TO :sch_gf;
@@ -29,6 +31,55 @@ SET search_path TO :sch_gf;
 -- Need better solution earlier on
 DELETE FROM gf_traits_species WHERE family IS NULL;
 DELETE FROM gf_vfoi_species WHERE family IS NULL;
+
+--
+-- Make table of all raw species and updated names
+-- Will be used later to update gf of synonymous names
+-- 
+
+-- Create table from raw traits gf table
+DROP TABLE IF EXISTS gf_syn_spp;
+CREATE TABLE gf_syn_spp AS
+SELECT DISTINCT scrubbed_family AS family, scrubbed_genus AS genus, 
+scrubbed_species_binomial AS species,
+scrubbed_family_orig as family_orig, scrubbed_genus_orig AS genus_orig, 
+scrubbed_species_binomial_orig AS species_orig
+FROM gf_traits_raw
+WHERE name_updated=1
+;
+-- Add species from raw vfoi (obs) gf table
+INSERT INTO gf_syn_spp (
+family, 
+genus, 
+species,
+family_orig, 
+genus_orig, 
+species_orig
+) 
+SELECT DISTINCT 
+scrubbed_family, 
+scrubbed_genus, 
+scrubbed_species_binomial,
+scrubbed_family_orig, 
+scrubbed_genus_orig, 
+scrubbed_species_binomial_orig
+FROM gf_vfoi_raw
+WHERE name_updated=1
+;
+
+CREATE TABLE gf_syn_species_temp (LIKE gf_syn_spp);
+INSERT INTO gf_syn_species_temp 
+SELECT DISTINCT * 
+FROM gf_syn_spp
+ORDER BY family, 
+genus, 
+species,
+family_orig, 
+genus_orig, 
+species_orig
+;
+DROP TABLE gf_syn_spp;
+ALTER TABLE gf_syn_species_temp RENAME TO gf_syn_spp;
 
 --
 -- Compile table of standardized gf attributions

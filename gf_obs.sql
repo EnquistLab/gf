@@ -14,8 +14,10 @@
 -- Date: 7 Jul 2022
 -- ---------------------------------------------------------------------------
 
-\set  sch_gf growthforms	-- Schema in which growth form tables will be built
-\set sch_obs analytical_db	-- Source schema of growth form attributions/observations
+-- Schema in which growth form tables will be built
+\set sch_gf growthforms
+-- Source schema of growth form attributions/observations
+\set sch_obs analytical_db
 
 \c vegbien
 CREATE SCHEMA IF NOT EXISTS :sch_gf;
@@ -381,7 +383,7 @@ CREATE INDEX gf_verbatim_vfoi_gf_verbatim_idx ON gf_verbatim_vfoi(gf_verbatim);
 
 DROP TABLE IF EXISTS gf_vfoi;
 CREATE TABLE gf_vfoi AS
-SELECT gf_vfoi_raw AS id, 
+SELECT taxonobservation_id AS id, 
 scrubbed_family as family, scrubbed_genus as genus, scrubbed_species_binomial as species, scrubbed_family_orig as family_orig, scrubbed_genus_orig as genus_orig, 
 scrubbed_species_binomial_orig as species_orig, name_updated, 
 growth_form as gf_verbatim
@@ -495,6 +497,8 @@ AND gf_std IS NOT NULL
 GROUP BY family, gf
 ORDER BY family, gf
 ;
+
+
 
 
 
