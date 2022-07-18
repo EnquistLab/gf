@@ -25,7 +25,7 @@ WHERE family='Apodanthaceae'
 UPDATE gf_family
 SET gf_cons='hemiepiphyte',
 gf_cons_obs=522,
-prop_gf_cons=(522::numeric / 1733::numeric)::decimal(5,2),
+gf_cons_prop=(522::numeric / 1733::numeric)::decimal(5,2),
 notes='Manually corrected from less accurate gf attribution tree'
 WHERE family='Cyclanthaceae';
 ;
@@ -43,7 +43,8 @@ WHERE family='Lophocoleaceae'
 ;
 UPDATE gf_family
 SET gf_cons='liana',
-prop_gf_cons=0,
+gf_all='liana',	
+gf_cons_prop=1,
 inferred_from_ranks=NULL,
 notes='Manually corrected from erroneous gf attribution shrub (both species are lianas)'
 WHERE family='Lophopyxidaceae'

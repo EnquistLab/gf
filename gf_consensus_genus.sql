@@ -200,7 +200,7 @@ genus text,
 gf_cons text,
 gf_cons_obs integer,
 total_obs integer,
-prop_gf_cons numeric,
+gf_cons_prop numeric,
 gf_all text
 );
 
@@ -233,7 +233,7 @@ GROUP BY genus
 WHERE a.genus=b.genus
 ;
 UPDATE gf_genus
-SET prop_gf_cons=(gf_cons_obs::numeric / total_obs::numeric)::decimal(4,1)
+SET gf_cons_prop=(gf_cons_obs::numeric / total_obs::numeric)::decimal(4,1)
 ; 
 
 -- Add all gf obs to allow them to be searched
