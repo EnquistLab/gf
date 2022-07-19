@@ -104,3 +104,11 @@ WHERE a.family=b.family
 AND a.gf IS NULL
 ;
 
+/* Use this command to dump the table to CSV file, if desired:
+
+\set fileandpath /tmp/ :tbl_spp .csv
+\copy :tbl_spp to :fileandpath WITH HEADER CSV
+\copy bien_ranges_species to /tmp/bien_ranges_species.csv WITH HEADER CSV
+
+*/
+
