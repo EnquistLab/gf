@@ -24,7 +24,7 @@ The individual scripts in this workflow will be redeveloped as semi-automated pi
 
 All growth form attributions at the species, genus or family level were compiled from the BIEN traits table (`agg_traits`) and the BIEN observations table (`view_full_occurrence_individual`). 
 
-####Taxonomy.
+#### Taxonomy
 Although taxon names had previously been standardized with the TNRS, names were checked to ensure that each species belonged to exactly one family. A small number of names (33) had homonym issues and were corrected by manual inspection.
 
 #### Vocabulary. 
