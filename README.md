@@ -15,7 +15,7 @@ Code for inferring growth forms of species within the BIEN database. This is don
 
 For each consensus growth form assigned to each species, a confidence score (0-1), categorical confidence flag ('very high', 'high', 'med', 'low', 'very low') and attribution method ('direct from species', 'imputed from family', 'imputed from genus') is also provided.
 
-This early 'alpha' release is a series of SQL only, with commands intended to be pasted into the postgres SQL interface (see **[III. Usage](#usage)** for sequence). Also note that the initial import steps require manual inspection and correction of taxonomy and growth form vocabulary. See instructions in individual scripts. 
+This early 'alpha' release is a series of SQL scripts, with commands intended to be pasted into the postgres SQL interface (see **[III. Usage](#usage)** for sequence). Also note that the initial import steps require manual inspection and correction of taxonomy and growth form vocabulary. See instructions in individual scripts. 
 
 The individual scripts in this workflow will be redeveloped as semi-automated pipeline at a later date.
 
