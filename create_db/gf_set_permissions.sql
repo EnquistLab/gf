@@ -1,5 +1,5 @@
 -- ---------------------------------------------------------------------------
--- Change owner of growth forms schema and tables
+-- Set final owner of growth forms schema and tables
 -- 
 -- Notes:
 --	1. 	Execute ALTER SCHEMA command directly. 
@@ -20,10 +20,8 @@
 -- Analytical schema
 \set sch_adb analytical_db
 
-
 \c :db_gf
 set search_path to :sch_gf;
-
 
 ALTER SCHEMA :sch_gf OWNER TO :new_owner;
 

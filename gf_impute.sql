@@ -10,15 +10,28 @@
 -- 
 -- ---------------------------------------------------------------------------
 
--- Schema of prepared growth form tables
-\set sch_gf growthforms 
+-- ------------------------------------------------------
+-- Parameters (the only ones you should need to set
+-- ------------------------------------------------------
 
--- Schema containing target table of species be updated, and name of target table
+-- Name of table of species be updated and name of schema containing species table
+/* syntax:
+\set sch_spp <SCHEMA_CONTAINING_USER_SPECIES_TABLE>
+\set tbl_spp <USER_SPECIES_TABLE>
+*/
 \set sch_spp boyle
 \set tbl_spp bien_ranges_species
 
 \set sch_spp analytical_db
 \set tbl_spp species_growth_forms
+
+-- ------------------------------------------------------
+-- Main
+-- ------------------------------------------------------
+
+-- Schema of prepared growth form tables
+\set sch_gf growthforms 
+
 
 \c vegbien
 SET search_path TO :sch_spp;

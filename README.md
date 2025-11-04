@@ -99,7 +99,9 @@ imputed from family | gf assigned by joining on family
 <a name="usage"></a>
 ## III. Usage
 
-The scripts **must** be run in the following order:
+#### 1. Create growth form database
+
+Scripts that create the BIEN Growth Form Database are found in subdirectory `create_db` within the code repository base directory. The database scripts **must** be run in the following order:
 
 1. `gf_traits.sql`
 2. `gf_obs.sql`
@@ -107,11 +109,39 @@ The scripts **must** be run in the following order:
 4. `gf_consensus_genus.sql`
 5. `gf_consensus_family.sql`
 6. `gf_manual_corrections.sql`
-7. `gf_conf`
-8. `gf_impute`
-9. `gf_correct_syn_species.sql` (optional; see script)
+7. `gf_conf`  
 
 The individual scripts in this workflow will be redeveloped as semi-automated pipeline at a later date.
+
+#### 2. Impute growth forms for species
+
+Inferring of growth forms for a user-submitted list of species is performed by script `gf_impute.sql`. This script lives in the code repository base directory. A second optional script, `gf_correct_syn_species.sql`, may be use to correct erroneous assignments of growth forms to species which are synonyms.
+
+***Architecture***   
+
+* Current architecture of the BIEN Growth Tool assumes that the growth form database (GFDB) is a schema within the BIEN observation database (vegbien)  
+* The user data is list of species (and their families) for which growth forms will be inferred, imported to a new table in a separate schema within the BIEN observation database.
+
+***Prepare and import the species list***   
+
+* The schema of the species table is simple: one column for family and one column for species. 
+* Do not include authors with species names
+* Although genus is use for inferring growth form, do not include it in the table. It will be extracted from the species name.
+* If family is not present in the original list, run the species names through the TNRS first to attach a family name to each species. 
+* Even if families are present in the original list, we *strongly* recommend running all names through the TNRS first to ensure they match to names used in the GFDB)
+
+***Infer growth forms***   
+
+Growth forms are inferred by running theh SQL in script `gf_impute.sql`. Before doing so, you MUST set the following parameters inside the script:
+
+```
+\set sch_spp <SCHEMA_CONTAINING_USER_SPECIES_TABLE>
+\set tbl_spp <USER_SPECIES_TABLE>
+```
+
+Once all commands have been executed, run the three (commented-out) shell commands at the end of the script to export table <USER_SPECIES_TABLE> as a CSV file.
+
+As an optional second step, before exporting the results, you may want to run script `gf_correct_syn_species.sql` to fix gf assignments to species which are synonyms. Set parameters sch_spp and tbl_spp as for `gf_impute.sql`.
 
 <a name="version"></a>
 ## IV. Version info
